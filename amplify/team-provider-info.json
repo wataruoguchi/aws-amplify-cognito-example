@@ -9,6 +9,11 @@
             "UnauthRoleName": "cognito-example-dev-20190601160301-unauthRole",
             "StackName": "cognito-example-dev-20190601160301",
             "StackId": "arn:aws:cloudformation:us-west-2:690565680494:stack/cognito-example-dev-20190601160301/681f3120-84c1-11e9-8f08-0a2e61a02d9e"
+        },
+        "categories": {
+            "auth": {
+                "cognitoexampled26e7f7d": {}
+            }
         }
     }
 }
