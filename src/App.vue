@@ -11,6 +11,16 @@
   </div>
 </template>
 
+<script>
+import { components } from 'aws-amplify-vue'
+
+export default {
+  components: {
+    ...components
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
