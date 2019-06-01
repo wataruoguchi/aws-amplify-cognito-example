@@ -1,0 +1,17 @@
+{
+    "projectName": "cognito-example",
+    "version": "2.0",
+    "frontend": "javascript",
+    "javascript": {
+        "framework": "vue",
+        "config": {
+            "SourceDir": "src",
+            "DistributionDir": "dist",
+            "BuildCommand": "yarn build",
+            "StartCommand": "yarn serve"
+        }
+    },
+    "providers": [
+        "awscloudformation"
+    ]
+}
