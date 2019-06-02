@@ -1,16 +1,16 @@
 <template>
   <div class="sign-up">
     <h1>Sign Up</h1>
-    <amplify-sign-up v-bind:signUpConfig="signUpConfig"></amplify-sign-up>
+    <Authenticator/>
   </div>
 </template>
 
 <script>
+import Authenticator from '@/components/Authenticator.vue'
 export default {
-  data() {
-    return {
-      signUpConfig: {},
-    }
-  }
+  name: "SignUp",
+  components: {
+    Authenticator
+  },
 }
 </script>
