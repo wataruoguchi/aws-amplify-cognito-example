@@ -27,12 +27,14 @@ const router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: () => import(/* webpackChunkName: "signup" */ './views/SignUp.vue')
+      component: () => import(/* webpackChunkName: "signup" */ './views/SignUp.vue'),
+      meta: { requiresNoAuth: true },
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "login" */ './views/LogIn.vue')
+      component: () => import(/* webpackChunkName: "login" */ './views/LogIn.vue'),
+      meta: { requiresNoAuth: true },
     },
     {
       path: '/about',
