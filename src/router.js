@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from './views/Index.vue'
-import { AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue'
-import * as AmplifyModules from 'aws-amplify'
+import { AmplifyEventBus } from 'aws-amplify-vue'
 import store from './store/index.js'
+import getUser from '@/utils/getUser.js'
 
 Vue.use(Router)
-Vue.use(AmplifyPlugin, AmplifyModules)
 
 const router = new Router({
   mode: 'history',
@@ -46,22 +45,6 @@ const router = new Router({
     }
   ]
 })
-
-function getUser() {
-  return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((user) => {
-    if (user && user.signInUserSession) {
-      // eslint-disable-next-line
-      console.log('getUser in router', user)
-      store.commit('setUser', user)
-      return user
-    }
-  }).catch((e) => {
-    /* eslint-disable-next-line */
-    console.log(e)
-    store.commit('setUser', null)
-    return null
-  })
-}
 
 getUser().then((user) => {
   if (user) {
