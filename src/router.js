@@ -30,6 +30,12 @@ const router = new Router({
       meta: { requiresNoAuth: true },
     },
     {
+      path: '/confirm',
+      name: 'confirm',
+      component: () => import(/* webpackChunkName: "signup" */ './views/ConfirmSignUp.vue'),
+      meta: { requiresNoAuth: true },
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './views/LogIn.vue'),
@@ -47,6 +53,7 @@ const router = new Router({
 })
 
 getUser().then((user) => {
+  console.log('before - beforeResolve', user)
   if (user) {
     router.push({path: '/home'})
   }
@@ -63,6 +70,9 @@ AmplifyEventBus.$on('authState', async (state) => {
     signUp: () => {
       router.push({path: '/signUp'})
     },
+    confirmSignUp: () => {
+      router.push({path: '/confirm'})
+    },
     signIn: () => {
       router.push({path: '/logIn'})
     },
@@ -77,6 +87,7 @@ AmplifyEventBus.$on('authState', async (state) => {
 
 router.beforeResolve(async (to, from, next) => {
   const user = await getUser()
+  console.log('beforeResolve', user)
   if (to.matched.some((record) => record.meta.requiresNoAuth)) {
     if (user) {
       return next({

@@ -17,6 +17,7 @@
         required/>
       <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
     </v-form>
+    <p v-if="message">{{ message }}</p>
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default {
       password: '',
       nameMaxLength: 20,
       passwordVisible: false,
+      message: null,
     }
   },
   computed: {
@@ -57,8 +59,12 @@ export default {
   },
   methods: {
     submit() {
+      this.message = null
       if (this.$refs.form.validate()) {
         signUp(this.username, this.password, this.email).then((data) => console.log('DONE', data))
+          .catch((err) => {
+            this.message = err.message
+          })
       }
     },
   },

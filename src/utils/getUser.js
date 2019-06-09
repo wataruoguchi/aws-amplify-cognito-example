@@ -4,14 +4,15 @@ import { Auth } from 'aws-amplify'
 export default function () {
   return Auth.currentAuthenticatedUser().then((user) => {
     if (user && user.signInUserSession) {
-      // eslint-disable-next-line
       console.log('getUser via getUser.js', user)
       store.commit('setUser', user)
       return user
+    } else {
+      console.log('not sign in', user)
+      return null
     }
   }).catch((e) => {
-    /* eslint-disable-next-line */
-    console.log(e)
+    console.log('Error in getUser', e)
     store.commit('setUser', null)
     return null
   })

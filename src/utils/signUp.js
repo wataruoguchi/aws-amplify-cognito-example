@@ -16,13 +16,14 @@ function signUp(username, password, email = '', phone_number = '') {
       AmplifyEventBus.$emit('localUser', data.user);
       if (data.userConfirmed === false) {
         AmplifyEventBus.$emit('authState', 'confirmSignUp');
+      } else {
+        AmplifyEventBus.$emit('authState', 'signIn');
       }
-      AmplifyEventBus.$emit('authState', 'signIn');
       return data;
     })
     .catch(err => {
       console.log(err);
-      return null;
+      throw err;
     });
 }
 
