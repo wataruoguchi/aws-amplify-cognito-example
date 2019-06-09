@@ -1,9 +1,8 @@
 <template>
   <div class="sign-up">
     <h1>Sign Up</h1>
-    <v-form v-model="valid" ref="form">
-      <v-text-field v-model="username" :rules="nameRules" :counter="nameMaxLength" label="User Name" required/>
-      <v-text-field v-model="email" :rules="emailRules" label="E-mail" required/>
+    <v-form v-model="valid" ref="form" lazy-validation>
+      <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
       <v-text-field
         v-model="password"
         :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
@@ -29,20 +28,12 @@ export default {
     return {
       valid: true,
       username: '',
-      email: '',
       password: '',
-      nameMaxLength: 20,
       passwordVisible: false,
       message: null,
     }
   },
   computed: {
-    nameRules() {
-      return [
-        v => !!v || 'Name is required',
-        v => (v && v.length >= 3 && v.length <= this.nameMaxLength) || `Name must be 3 to ${this.nameMaxLength} characters`
-      ]
-    },
     emailRules() {
       return [
         v => !!v || 'E-mail is required',
@@ -61,7 +52,8 @@ export default {
     submit() {
       this.message = null
       if (this.$refs.form.validate()) {
-        signUp(this.username, this.password, this.email).then((data) => console.log('DONE', data))
+        // username should be their password
+        signUp(this.username, this.password, this.usernmae).then((data) => console.log('DONE', data))
           .catch((err) => {
             this.message = err.message
           })

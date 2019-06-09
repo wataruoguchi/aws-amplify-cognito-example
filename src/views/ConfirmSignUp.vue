@@ -1,8 +1,8 @@
 <template>
   <div class="confirm-sign-up">
     <h1>Confirm Sign Up</h1>
-    <v-form v-model="valid" ref="form">
-      <v-text-field v-model="username" :rules="nameRules" :counter="nameMaxLength" label="User Name" required/>
+    <v-form v-model="valid" ref="form" lazy-validation>
+      <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
       <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
       <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
     </v-form>
@@ -21,21 +21,20 @@ export default {
       valid: true,
       username: '',
       code: '',
-      nameMaxLength: 20,
       message: null,
     }
   },
   computed: {
-    nameRules() {
+    emailRules() {
       return [
-        v => !!v || 'Name is required',
-        v => (v && v.length >= 3 && v.length <= this.nameMaxLength) || `Name must be 3 to ${this.nameMaxLength} characters`
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
       ]
     },
     codeRules() {
       return [
         v => !!v || 'Code is required',
-        v => (v && v.length === 6 &&v.match(/^\d+$/)) || 'Code must be 6 digits'
+        v => (v && v.length === 6) || 'Code must be 6 digits'
       ]
     },
   },

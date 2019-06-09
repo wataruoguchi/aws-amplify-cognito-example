@@ -1,8 +1,8 @@
 <template>
   <div class="log-in">
     <h1>Log In</h1>
-    <v-form v-model="valid" ref="form">
-      <v-text-field v-model="username" :rules="nameRules" :counter="nameMaxLength" label="User Name" required/>
+    <v-form v-model="valid" ref="form" lazy-validation>
+      <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
       <v-text-field
         v-model="password"
         :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
@@ -28,15 +28,14 @@ export default {
       valid: true,
       username: '',
       password: '',
-      nameMaxLength: 20,
       passwordVisible: false,
     }
   },
   computed: {
-    nameRules() {
+    emailRules() {
       return [
-        v => !!v || 'Name is required',
-        v => (v && v.length >= 3 && v.length <= this.nameMaxLength) || `Name must be 3 to ${this.nameMaxLength} characters`
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
       ]
     },
     passwordRules() {
