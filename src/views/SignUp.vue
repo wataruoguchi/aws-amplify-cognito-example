@@ -58,7 +58,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        signUp(this.username, this.password, this.email)
+        signUp(this.username, this.password, this.email).then((data) => console.log('DONE', data))
       }
     },
   },

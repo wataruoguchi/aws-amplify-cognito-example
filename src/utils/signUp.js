@@ -1,7 +1,8 @@
 import { Auth } from 'aws-amplify';
+import { AmplifyEventBus } from 'aws-amplify-vue'
 
 function signUp(username, password, email = '', phone_number = '') {
-  Auth.signUp({
+  return Auth.signUp({
     username,
     password,
     attributes: {
@@ -11,8 +12,18 @@ function signUp(username, password, email = '', phone_number = '') {
     },
     validationData: []  //optional
   })
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
+    .then(data => {
+      AmplifyEventBus.$emit('localUser', data.user);
+      if (data.userConfirmed === false) {
+        AmplifyEventBus.$emit('authState', 'confirmSignUp');
+      }
+      AmplifyEventBus.$emit('authState', 'signIn');
+      return data;
+    })
+    .catch(err => {
+      console.log(err);
+      return null;
+    });
 }
 
 export default signUp
