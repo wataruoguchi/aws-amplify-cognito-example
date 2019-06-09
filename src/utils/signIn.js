@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify';
+import { AmplifyEventBus } from 'aws-amplify-vue'
 
 async function signIn(username, password) {
 	try {

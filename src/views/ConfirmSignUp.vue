@@ -1,22 +1,24 @@
 <template>
-  <div class="sign-up">
+  <div class="confirm-sign-up">
     <h1>Confirm Sign Up</h1>
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="username" :rule="nameRules" :counter="nameMaxLength" label="User Name" required/>
-      <v-text-field v-model="code" :rule="codeRules" label="Code" required/>
+      <v-text-field v-model="username" :rules="nameRules" :counter="nameMaxLength" label="User Name" required/>
+      <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
       <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
     </v-form>
+    <v-btn @click="resend">Resend Code</v-btn>
     <p v-if="message">{{ message }}</p>
   </div>
 </template>
 
 <script>
+import resendSignUp from '@/utils/resendSignUp.js'
 import confirmSignUp from '@/utils/confirmSignUp.js'
 export default {
   name: "ConfirmSignUp",
   data() {
     return {
-      valid: false,
+      valid: true,
       username: '',
       code: '',
       nameMaxLength: 20,
@@ -33,14 +35,14 @@ export default {
     codeRules() {
       return [
         v => !!v || 'Code is required',
-        v => (v && v.length === 6) || 'Code must be 6 digits'
+        v => (v && v.length === 6 &&v.match(/^\d+$/)) || 'Code must be 6 digits'
       ]
     },
   },
   methods: {
     submit() {
-      this.message = null
-    if (this.$refs.form.validate()) {
+      this.message = null;
+      if (this.$refs.form.validate()) {
         console.log('confirming', this.username, this.code)
         confirmSignUp(this.username, this.code).then((data) => console.log('DONE', data))
           .catch((err) => {
@@ -48,6 +50,9 @@ export default {
           });
       }
     },
+    resend() {
+      resendSignUp(this.username);
+    }
   },
 }
 </script>

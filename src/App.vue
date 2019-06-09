@@ -4,6 +4,7 @@
       <router-link to="/">Index</router-link> |
       <router-link to="/home">Home</router-link> |
       <router-link to="/signup">SignUp</router-link> |
+      <router-link to="/confirm">Confirm</router-link> |
       <router-link to="/login">LogIn</router-link> |
       <router-link to="/about">About</router-link>
     </div>

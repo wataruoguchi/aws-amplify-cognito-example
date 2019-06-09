@@ -2,7 +2,7 @@
   <div class="log-in">
     <h1>Log In</h1>
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="username" :rule="nameRules" :counter="nameMaxLength" label="User Name" required/>
+      <v-text-field v-model="username" :rules="nameRules" :counter="nameMaxLength" label="User Name" required/>
       <v-text-field
         v-model="password"
         :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
@@ -25,7 +25,7 @@ export default {
   name: "LogIn",
   data() {
     return {
-      valid: false,
+      valid: true,
       username: '',
       password: '',
       nameMaxLength: 20,

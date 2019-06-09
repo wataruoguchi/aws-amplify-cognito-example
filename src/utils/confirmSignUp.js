@@ -6,7 +6,7 @@ function confirmSignUp(username, code) {
     // Optional. Force user confirmation irrespective of existing alias. By default set to True.
     forceAliasCreation: true
   }).then(data => {
-    AmplifyEventBus.$emit('authState', 'signedIn')
+    AmplifyEventBus.$emit('authState', 'signIn')
     return data // 'SUCCESS'
   })
     .catch(err => {

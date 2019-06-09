@@ -2,8 +2,8 @@
   <div class="sign-up">
     <h1>Sign Up</h1>
     <v-form v-model="valid" ref="form">
-      <v-text-field v-model="username" :rule="nameRules" :counter="nameMaxLength" label="User Name" required/>
-      <v-text-field v-model="email" :rule="emailRules" label="E-mail" required/>
+      <v-text-field v-model="username" :rules="nameRules" :counter="nameMaxLength" label="User Name" required/>
+      <v-text-field v-model="email" :rules="emailRules" label="E-mail" required/>
       <v-text-field
         v-model="password"
         :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
@@ -27,7 +27,7 @@ export default {
   name: "SignUp",
   data() {
     return {
-      valid: false,
+      valid: true,
       username: '',
       email: '',
       password: '',
