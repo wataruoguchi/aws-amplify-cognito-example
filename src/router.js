@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from './views/Index.vue'
-import { AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue'
-import * as AmplifyModules from 'aws-amplify'
+import { AmplifyEventBus } from 'aws-amplify-vue'
 import store from './store/index.js'
+import getUser from '@/utils/getUser.js'
 
 Vue.use(Router)
-Vue.use(AmplifyPlugin, AmplifyModules)
 
 const router = new Router({
   mode: 'history',
@@ -31,6 +30,12 @@ const router = new Router({
       meta: { requiresNoAuth: true },
     },
     {
+      path: '/confirm',
+      name: 'confirm',
+      component: () => import(/* webpackChunkName: "signup" */ './views/ConfirmSignUp.vue'),
+      meta: { requiresNoAuth: true },
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './views/LogIn.vue'),
@@ -47,23 +52,8 @@ const router = new Router({
   ]
 })
 
-function getUser() {
-  return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((user) => {
-    if (user && user.signInUserSession) {
-      // eslint-disable-next-line
-      console.log('getUser in router', user)
-      store.commit('setUser', user)
-      return user
-    }
-  }).catch((e) => {
-    /* eslint-disable-next-line */
-    console.log(e)
-    store.commit('setUser', null)
-    return null
-  })
-}
-
 getUser().then((user) => {
+  console.log('before - beforeResolve', user)
   if (user) {
     router.push({path: '/home'})
   }
@@ -80,6 +70,9 @@ AmplifyEventBus.$on('authState', async (state) => {
     signUp: () => {
       router.push({path: '/signUp'})
     },
+    confirmSignUp: () => {
+      router.push({path: '/confirm'})
+    },
     signIn: () => {
       router.push({path: '/logIn'})
     },
@@ -94,6 +87,7 @@ AmplifyEventBus.$on('authState', async (state) => {
 
 router.beforeResolve(async (to, from, next) => {
   const user = await getUser()
+  console.log('beforeResolve', user)
   if (to.matched.some((record) => record.meta.requiresNoAuth)) {
     if (user) {
       return next({
