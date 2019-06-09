@@ -1,14 +1,11 @@
-import Vue from 'vue'
 import store from '@/store/index.js'
-import { AmplifyPlugin } from 'aws-amplify-vue'
-import * as AmplifyModules from 'aws-amplify'
-Vue.use(AmplifyPlugin, AmplifyModules)
+import { Auth } from 'aws-amplify'
 
 export default function () {
-  return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((user) => {
+  return Auth.currentAuthenticatedUser().then((user) => {
     if (user && user.signInUserSession) {
       // eslint-disable-next-line
-      console.log('getUser via $Amplify', user)
+      console.log('getUser via getUser.js', user)
       store.commit('setUser', user)
       return user
     }
